@@ -1,5 +1,6 @@
 name: PhotoMemory CI-CD
 
+# Triggers define when this automation runs. We watch the 'main' branch for updates.
 on:
   push:
     branches: [ "main" ]
@@ -8,17 +9,21 @@ on:
 
 jobs:
   build-and-test:
+    # Running on Ubuntu as it provides the most compatible environment for Docker builds.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
+        # Uses the official action to download the repo code onto the runner machine.
         uses: actions/checkout@v4
 
-      - name: Build Backend
+      - name: Build Backend Service
         run: |
+          # Change directory to backend so Docker can find the local Dockerfile context.
           cd backend
           docker build -t photomemory-api .
 
-      - name: Build Frontend
+      - name: Build Frontend Service
         run: |
+          # Execute the multi-stage build for the React/Vite application.
           cd frontend
           docker build -t photomemory-ui .
