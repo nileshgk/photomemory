@@ -1,0 +1,94 @@
+/**
+ * PHOTOMEMORY PRO - GLOBAL STYLE DEFINITIONS
+ * ---------------------------------------------------------
+ * DESIGN SYSTEM: High-Contrast Minimalist / Dark Mode
+ * THEME: Pure Black (#000) & Zinc-950 with pure Red (#FF0000) accents.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. GLOBAL RESET & PERFORMANCE */
+:root {
+  /* Informs the browser to use dark-themed system elements (e.g., date pickers) */
+  color-scheme: dark;
+}
+
+body {
+  /* Use 'antialiased' for smoother font rendering on high-DPI displays */
+  @apply bg-black text-white antialiased selection:bg-red-600 selection:text-white;
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* 2. CUSTOM MINIMALIST SCROLLBAR */
+/* Keeps the UI clean and consistent across browsers */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800 rounded-full hover:bg-red-600 transition-colors;
+}
+
+/* 3. THE "AI LASER SCAN" EFFECT */
+/* This animates a red bar moving top-to-bottom across the camera feed 
+   to signify active face detection. 
+*/
+.scan-line {
+  width: 100%;
+  height: 2px;
+  @apply bg-red-600 shadow-[0_0_15px_rgba(255,0,0,0.8)];
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  pointer-events: none;
+  animation: scanning 2.5s ease-in-out infinite;
+}
+
+@keyframes scanning {
+  0%, 100% { top: 0%; opacity: 0; }
+  50% { top: 100%; opacity: 1; }
+}
+
+/* 4. GLASSMORPHISM FOR OVERLAYS */
+/* Used for Login/Register containers to give them depth against the solid black background */
+.glass-panel {
+  @apply bg-zinc-950/70 backdrop-blur-md border border-white/10;
+}
+
+/* 5. TYPOGRAPHY ACCENTS */
+h1, h2, h3 {
+  @apply tracking-tighter font-black;
+}
+
+/* Custom utility for hollow/outline text, used in the branding footers */
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  color: transparent;
+}
+
+/* 6. UTILITY: LOADING STATE SHIMMER */
+/* Skeleton card animation for the Gallery while fetching S3 assets */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(24, 24, 27, 0) 0%,
+    rgba(39, 39, 42, 1) 50%,
+    rgba(24, 24, 27, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
